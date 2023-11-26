@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from itertools import permutations
 
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +24,6 @@ def has_pythagorean_triples(arr):
                 r -= 1
     return False
 
-
 @app.route('/check-pythagorean', methods=['POST'])
 def check_pythagorean():
     data = request.get_json()
@@ -36,24 +34,42 @@ def check_pythagorean():
     response = {'result': 'Yes' if result else 'No'}
     return jsonify(response)
 
-
 def generate_comparisons(arr):
     comparisons = []
     n = len(arr)
-    for i in range(n):
-        comparison = ""
-        for j in range(n):
-            if i != j:  # Exclude self-comparisons
-                if arr[i] < arr[j]:
-                    comparison += str(arr[i]) + " < " + str(arr[j]) + " > "
-                elif arr[i] > arr[j]:
-                    comparison += str(arr[i]) + " > " + str(arr[j]) + " < "
-        if comparison:
-            if comparison not in comparisons and comparison[::-1] not in comparisons:
-                comparisons.append(comparison[:-3])  # Remove the last three characters (space and two symbols)
-    comparisons.sort()  # Sort the comparisons
-    return comparisons
+    arr.sort()
 
+    def backtrack(curr_comparison, remaining):
+        if len(curr_comparison) == n:
+            comparisons.append(curr_comparison)
+            return
+
+        for i in range(len(remaining)):
+            new_comparison = curr_comparison + [remaining[i]]
+
+            if len(new_comparison) > 1:
+                if new_comparison[-1] == new_comparison[-2]:
+                    continue
+
+                if (new_comparison[-1] < new_comparison[-2]) == (len(new_comparison) % 2 == 0):
+                    continue
+
+            backtrack(new_comparison, remaining[:i] + remaining[i + 1:])
+
+    backtrack([], arr)
+
+    formatted_comparisons = []
+    for comp in comparisons:
+        formatted = ""
+        for i in range(len(comp) - 1):
+            if comp[i] < comp[i + 1]:
+                formatted += str(comp[i]) + "<"
+            else:
+                formatted += str(comp[i]) + ">"
+        formatted += str(comp[-1])
+        formatted_comparisons.append(formatted)
+
+    return list(set(formatted_comparisons))  # Use set to remove duplicates and convert back to a list
 
 @app.route('/compare', methods=['POST'])
 def compare():
@@ -67,7 +83,6 @@ def compare():
 @app.route('/')
 def base_check():
     return "Great Success!"
-
 
 if __name__ == '__main__':
     app.run(debug=True)
