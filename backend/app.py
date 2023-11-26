@@ -64,6 +64,10 @@ def compare():
         return jsonify({'comparisons': result})
     return jsonify({'error': 'Invalid input'})
 
+@app.route('/')
+def base_check():
+    return "Great Success!"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
