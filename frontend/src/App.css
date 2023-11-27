@@ -14,6 +14,7 @@ nav ul {
   padding: 0;
   display: flex;
   justify-content: center;
+  margin: 0; /* Remove default margin */
 }
 
 nav ul li {
@@ -23,8 +24,21 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   color: white;
+  transition: color 0.3s ease; /* Smooth color transition */
 }
 
 nav ul li a:hover {
   color: lightgray;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    margin: 5px 0; /* Adjust margin for smaller screens */
+  }
 }

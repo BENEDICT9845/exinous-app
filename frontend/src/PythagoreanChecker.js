@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./PythagoreanChecker.css"; // Add your CSS file for styling
+import "./PythagoreanChecker.css";
 
 function PythagoreanChecker() {
   const [inputArray, setInputArray] = useState([]);

@@ -5,7 +5,7 @@ import LandingPage from "./LandingPage";
 import "./App.css";
 import NumberComparator from "./NumberComparator";
 
-function App() {
+const App = () => {
   return (
     <Router>
       <div className="App">
@@ -22,7 +22,6 @@ function App() {
             </li>
           </ul>
         </nav>
-
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/triple-check" element={<PythagoreanChecker />} />
@@ -31,6 +30,6 @@ function App() {
       </div>
     </Router>
   );
-}
+};
 
 export default App;
