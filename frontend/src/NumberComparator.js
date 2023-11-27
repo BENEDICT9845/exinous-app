@@ -11,7 +11,7 @@ function NumberComparator() {
 
   const compareNumbers = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/compare", {
+      const response = await fetch("http://65.1.110.126:8002/compare", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -7,13 +7,16 @@ function PythagoreanChecker() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/check-pythagorean", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ inputArray }),
-      });
+      const response = await fetch(
+        "http://65.1.110.126:8002/check-pythagorean",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ inputArray }),
+        }
+      );
       const data = await response.json();
       setResult(data.result);
     } catch (error) {
