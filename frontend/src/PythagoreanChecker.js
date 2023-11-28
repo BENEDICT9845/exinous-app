@@ -8,7 +8,7 @@ function PythagoreanChecker() {
   const handleSubmit = async () => {
     try {
       const response = await fetch(
-        "http://65.1.110.126:8002/check-pythagorean",
+        "http://65.1.110.126/api/check-pythagorean",
         {
           method: "POST",
           headers: {

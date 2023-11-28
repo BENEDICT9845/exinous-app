@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+api_bp = Blueprint('api', __name__, url_prefix='/api')
 
 def has_pythagorean_triples(arr):
     # Function to check for Pythagorean triples
@@ -24,7 +25,7 @@ def has_pythagorean_triples(arr):
                 r -= 1
     return False
 
-@app.route('/check-pythagorean', methods=['POST'])
+@api_bp.route('/check-pythagorean', methods=['POST'])
 def check_pythagorean():
     data = request.get_json()
     input_array = data.get('inputArray', [])
@@ -71,7 +72,7 @@ def generate_comparisons(arr):
 
     return list(set(formatted_comparisons))  # Use set to remove duplicates and convert back to a list
 
-@app.route('/compare', methods=['POST'])
+@api_bp.route('/compare', methods=['POST'])
 def compare():
     data = request.json
     if 'numbers' in data:
@@ -80,9 +81,11 @@ def compare():
         return jsonify({'comparisons': result})
     return jsonify({'error': 'Invalid input'})
 
-@app.route('/')
+@api_bp.route('/')
 def base_check():
     return "Great Success!"
+
+app.register_blueprint(api_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)
